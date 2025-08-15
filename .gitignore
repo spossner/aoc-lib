@@ -1,4 +1,18 @@
-/venv/
+# IDE
 /.idea/
-/dist/
-/aoc_lib.egg-info/
+
+# virtual envs
+venv/
+.venv/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.build/
+dist/
+.pytest_cache/
+.mypy_cache/
+
+# AOC dependencies
+aoc_lib.egg-info/

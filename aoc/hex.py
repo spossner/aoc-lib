@@ -1,7 +1,3 @@
-from __future__ import nested_scopes
-from __future__ import division
-
-
 class Hex:
     def __init__(self, q, r, s):
         assert (round(q + r + s) == 0), "q + r + s must be 0"

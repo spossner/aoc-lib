@@ -24,6 +24,20 @@ ADJACENTS_3D = (
     Point3d(0, 0, 1),  # BEHIND
 )
 
+OPPOSITE_DIRECTION = {
+    NORTH: SOUTH,
+    SOUTH: NORTH,
+    EAST: WEST,
+    WEST: EAST,
+}
+
+DIRECTIONS = {
+    "N": NORTH, "n": NORTH, "U": NORTH, "u": NORTH, "^": NORTH,
+    "S": SOUTH, "s": SOUTH, "D": SOUTH, "d": SOUTH, "v": SOUTH,
+    "E": EAST, "e": EAST, "R": EAST, "r": EAST, ">": EAST,
+    "W": WEST, "w": WEST, "L": WEST, "l": WEST, "<": WEST,
+}
+
 
 def translate(p: Union[Point, Point3d, tuple], offset: tuple, times=1) -> Union[Point, Point3d, tuple]:
     if type(p) == Point3d:
