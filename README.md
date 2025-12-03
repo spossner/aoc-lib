@@ -1,17 +1,62 @@
-# AOC
-Tools to support in solving the advent of code puzzles (see https://adventofcode.com/)
+# aoc
 
-Several Point related functions (including rotation, manhattan distance), iterating the adjacent points or fetching data in a smart way
+Tools and helpers to solve Advent of Code puzzles.
 
-# Deploy to PyPi
-## Pre-Req
-- set the new version in `setup.py` – note that files which already exist in PyPi are not uploaded (note the error message)
-- Install setuptools, wheel and the twine package by running `venv/bin/python -m pip install --upgrade setuptools wheel twine` in jetbrains console
+## Installation
 
-## Deploy
-1. Clean the dist folder if you only want the latest version uploaded
-2. Build the dist into /dist folder by running 
-   `python -m build`
-2. Upload to PyPi by running 
-   `python -m twine upload dist/*`
-   with username `__token__` and the password (see keepass)
+### From PyPI
+
+```bash
+uv add aoc
+```
+
+### Local Development
+
+```bash
+# Clone the repository
+git clone https://github.com/spossner/aoc-lib.git
+cd aoc
+
+# Install with dev dependencies
+uv sync --extra dev
+
+# Or install as editable in another project
+uv add --editable /path/to/aoc-lib
+```
+
+## Usage
+
+```python
+from aoc import hello
+
+print(hello())
+```
+
+## Development
+
+```bash
+# Install dev dependencies
+uv sync --extra dev
+
+# Run tests
+uv run pytest
+
+# Run linter
+uv run ruff check .
+
+# Run type checker
+uv run mypy src/
+
+# Format code
+uv run ruff format .
+```
+
+## Publishing to PyPI
+
+```bash
+# Build the package
+uv build
+
+# Publish (requires PyPI token)
+uv publish
+```

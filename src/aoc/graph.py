@@ -1,17 +1,17 @@
 import heapq
-from collections import deque, namedtuple, defaultdict
+from collections import defaultdict, deque, namedtuple
 from itertools import chain
 
 Edge = namedtuple("Edge", "child,dist", defaults=[1])
 
 
 def edge_iter(edge):
-    if type(edge) is Edge:
+    if isinstance(edge, Edge):
         yield edge
-    elif type(edge) is tuple:
-        assert len(edge) >= 1 and len(edge) <= 2  # assert it looks like an edge
+    elif isinstance(edge, tuple):
+        assert 1 <= len(edge) <= 2  # assert it looks like an edge
         yield Edge(*edge)
-    elif type(edge) is list or type(edge) is set:
+    elif isinstance(edge, (list, set)):
         for e in edge:
             yield from edge_iter(e)
     else:
@@ -28,7 +28,10 @@ def make_undirected(edges):
 
 
 def node_set(edges):
-    return set(map(lambda e: e.child, chain(*[edge_iter(e) for e in edges.values()]))).union(edges.keys())
+    children = set(
+        map(lambda e: e.child, chain(*[edge_iter(e) for e in edges.values()]))
+    )
+    return children.union(edges.keys())
 
 
 def _bfs(edges, start, is_target, with_path=True):
@@ -44,9 +47,9 @@ def _bfs(edges, start, is_target, with_path=True):
         for child, dist in edge_iter(edges[node]):
             if child in seen:
                 continue
-            seen.add(node)
+            seen.add(child)
             q.append(([*path, child] if with_path else child, total_dist + dist))
-    return None, -1 if with_path else -1
+    return (None, -1) if with_path else -1
 
 
 def _dfs(edges, cur, is_target, path_set=None, total_dist=0, best=0):
@@ -72,7 +75,7 @@ def _dijkstra(edges, start, is_target, with_path=True):
         node = path[-1] if with_path else path
         if is_target(node):
             return (path, total_dist) if with_path else total_dist
-        if not node in edges:
+        if node not in edges:
             continue
         for child, dist in edge_iter(edges[node]):
             costs = total_dist + dist
@@ -81,7 +84,7 @@ def _dijkstra(edges, start, is_target, with_path=True):
                 min_costs[child] = costs
                 heapq.heappush(paths, (costs, [*path, child] if with_path else child))
 
-    return None, -1 if with_path else -1
+    return (None, -1) if with_path else -1
 
 
 def bfs_all_nodes(edges, start):
@@ -125,37 +128,42 @@ def dijkstra_length(edges, start, destination):
 
 if __name__ == "__main__":
     edges = {
-        'a': ['b'],
-        'e': 'c',
-        'c': ['a', 'b', ('d', 1.2)],
-        'b': Edge('a', 1.4),
-        'd': [Edge('a', 2), Edge('c'), 'f'],
-        'f': [('c', 1.9), 'g'],
-        'g': ('f',),
-        0: 1,
+        "a": ["b"],
+        "e": "c",
+        "c": ["a", "b", ("d", 1.2)],
+        "b": Edge("a", 1.4),
+        "d": [Edge("a", 2), Edge("c"), "f"],
+        "f": [("c", 1.9), "g"],
+        "g": ("f",),
         0: 2,
         2: [0, 1],
     }
 
-    print(bfs(edges, 'c', lambda e: e.upper() >= 'E'))
-    print(bfs_length(edges, 'c', 'g'))
+    print(bfs(edges, "c", lambda e: e.upper() >= "E"))
+    print(bfs_length(edges, "c", "g"))
 
-    print(dfs(edges, 'c', 'g'))
+    print(dfs(edges, "c", "g"))
 
     ed2 = {
-        'a': [('b', 1), ('c', 3)],
-        'b': ('c', 3),
+        "a": [("b", 1), ("c", 3)],
+        "b": ("c", 3),
     }
 
-    print(dijkstra(ed2, 'a', 'c'))
+    print(dijkstra(ed2, "a", "c"))
 
     ed3 = {
         "A": [("B", 7), ("D", 5)],
         "B": [("C", 8), ("D", 9), ("E", 7)],
         "C": ("E", 5),
-        "D": [("E", 15), ("F", 6), ],
-        "E": [("F", 8), ("G", 9), ],
-        "F": ("G", 11)
+        "D": [
+            ("E", 15),
+            ("F", 6),
+        ],
+        "E": [
+            ("F", 8),
+            ("G", 9),
+        ],
+        "F": ("G", 11),
     }
 
     print(dijkstra(ed3, "A", "E"))
@@ -179,12 +187,34 @@ if __name__ == "__main__":
     assert dijkstra_length(ed4_undirected, "a", "f") == 20
 
     ed5 = {
-        "a": [("b", 7), ("d", 14), ("c", 9), ],
-        "b": [("c", 10), ("f", 15), ],
-        "c": [("a", 9), ("b", 10), ("d", 2), ("f", 11), ],
-        "d": [("c", 2), ("e", 9), ],
-        "e": [("d", 9), ("f", 6), ],
-        "f": [("b", 15), ("c", 11), ("e", 6), ],
+        "a": [
+            ("b", 7),
+            ("d", 14),
+            ("c", 9),
+        ],
+        "b": [
+            ("c", 10),
+            ("f", 15),
+        ],
+        "c": [
+            ("a", 9),
+            ("b", 10),
+            ("d", 2),
+            ("f", 11),
+        ],
+        "d": [
+            ("c", 2),
+            ("e", 9),
+        ],
+        "e": [
+            ("d", 9),
+            ("f", 6),
+        ],
+        "f": [
+            ("b", 15),
+            ("c", 11),
+            ("e", 6),
+        ],
     }
 
     assert dijkstra_length(ed5, "a", "a") == 0

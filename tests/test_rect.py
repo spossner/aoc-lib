@@ -1,6 +1,6 @@
 from itertools import chain
 
-from aoc import Rect, Point
+from aoc import Point, Rect
 
 
 def test_rect():
@@ -18,6 +18,7 @@ def test_rect():
     assert Point(34, 34) in r1
     assert Point(35, 35) not in r1
 
+
 def test_contains():
     r = Rect(490, 0, 74, 162)
     p = Point(556, 124)
@@ -27,9 +28,13 @@ def test_contains():
     r.extend(p2)
     assert p2 in r
 
+
 def test_extend():
     r1 = Rect(5, 5, 10, 10)
-    p_out = (Point(3, 3), Point(15, 5), Point(5, 15), Point(15, 15), Point(0, 0), Point(23, 34), Point(23, 2), Point(20, 34))
+    p_out = (
+        Point(3, 3), Point(15, 5), Point(5, 15), Point(15, 15),
+        Point(0, 0), Point(23, 34), Point(23, 2), Point(20, 34)
+    )
     p_still_out = (Point(-1, 3), Point(15, -1), Point(24, 15), Point(20, 35))
     p_in = (Point(5, 5), Point(6, 5), Point(14, 5), Point(5, 14), Point(14, 14))
     for p in p_in:
@@ -56,7 +61,7 @@ def test_empty_rect():
     empty.extend(p2)
     assert p in empty
     assert p2 in empty
-    assert Point(520,110) in empty
+    assert Point(520, 110) in empty
 
 
 def test_rect_intersection():
@@ -74,25 +79,27 @@ def test_rect_intersection():
     assert r_j in r_i
     assert r_i == r_j
 
+
 def test_rect_extend():
     r1 = Rect(5, 5, 30, 30)
-    r1.extend(Point(1,1))
-    assert Point(34,34) in r1
-    assert Point(35,35) not in r1
+    r1.extend(Point(1, 1))
+    assert Point(34, 34) in r1
+    assert Point(35, 35) not in r1
     assert r1.x == 1
     assert r1.y == 1
     assert Point(34, 34) in r1
     assert Point(35, 35) not in r1
 
     r2 = Rect(5, 5, 30, 30)
-    r2.extend([23,20])
-    r2.extend((2,2))
+    r2.extend([23, 20])
+    r2.extend((2, 2))
     assert Point(34, 34) in r2
     assert Point(35, 35) not in r2
 
+
 def test_rect_multi_extend():
     r1 = Rect(5, 5, 30, 30)
-    r1.extend(Point(1,1), Point(40,40), Point(50,50), (60,60), [70,70,70])
+    r1.extend(Point(1, 1), Point(40, 40), Point(50, 50), (60, 60), [70, 70, 70])
     assert Point(34, 34) in r1
     assert Point(70, 70) in r1
     assert Point(0, 0) not in r1
@@ -100,7 +107,11 @@ def test_rect_multi_extend():
 
 def test_rect_extend_list_mixed():
     r1 = Rect(5, 5, 30, 30)
-    r1.extend((Point(1,1), Point(40,40), Point(50,50), (60,60), [70,70,70]), Point(80,80), [Point(90,90)])
+    r1.extend(
+        (Point(1, 1), Point(40, 40), Point(50, 50), (60, 60), [70, 70, 70]),
+        Point(80, 80),
+        [Point(90, 90)],
+    )
     assert Point(34, 34) in r1
     assert Point(70, 70) in r1
     assert Point(0, 0) not in r1

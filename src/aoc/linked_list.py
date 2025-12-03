@@ -13,7 +13,6 @@ class ListNode:
 
     def __iter__(self):
         node = self
-        stop = self
         while node:
             yield node.val
             node = node.next_node
@@ -42,7 +41,7 @@ class ListNode:
         return self
 
     def insert_after(self, val):
-        if type(val) == ListNode:
+        if isinstance(val, ListNode):
             node = val
             node.prev_node = self
             node.next_node = self.next_node
@@ -55,7 +54,7 @@ class ListNode:
         return node
 
     def insert_before(self, val):
-        if type(val) == ListNode:
+        if isinstance(val, ListNode):
             node = val
             node.prev_node = self.prev_node
             node.next_node = self
@@ -84,7 +83,7 @@ class SinglyListNode:
         self.next_node = next_node
 
     def has_next(self):
-        return self.next_node != None
+        return self.next_node is not None
 
     def __iter__(self):
         node = self
@@ -93,7 +92,9 @@ class SinglyListNode:
             node = node.next_node
 
     def __str__(self):
-        return str(self.val) + ("" if self.next_node is None else "->[" + str(self.next_node.val) + "...]")
+        if self.next_node is None:
+            return str(self.val)
+        return f"{self.val}->[{self.next_node.val}...]"
 
     def reverse(self, append=None):
         if self.next_node is None:

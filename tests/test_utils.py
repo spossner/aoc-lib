@@ -1,4 +1,4 @@
-from aoc import get_ints, fetch, batched, range_intersect
+from aoc import batched, fetch, get_ints, range_intersect
 
 
 def test_fetch():
@@ -14,7 +14,7 @@ def test_get_ints():
 
 
 def test_batched():
-    assert list(batched("ABCDEFG", 3)) == [['A', 'B', 'C'], ['D', 'E', 'F'], ['G']]
+    assert list(batched("ABCDEFG", 3)) == [["A", "B", "C"], ["D", "E", "F"], ["G"]]
 
 
 def test_range_intersection():
@@ -24,9 +24,9 @@ def test_range_intersection():
     assert range_intersect(r1, r2) == range(50, 100)
     assert range_intersect(r1, r1) == r1
     assert range_intersect(r2, r2) == r2
-    assert range_intersect(r1, range(200, 300)) == None
-    assert range_intersect(r1, None) == None
-    assert range_intersect(None, r2) == None
-    assert range_intersect(None, None) == None
-    assert range_intersect(r1, range(0, 1)) == None
+    assert range_intersect(r1, range(200, 300)) is None
+    assert range_intersect(r1, None) is None
+    assert range_intersect(None, r2) is None
+    assert range_intersect(None, None) is None
+    assert range_intersect(r1, range(0, 1)) is None
     assert range_intersect(r1, range(0, 2)) == range(1, 2)

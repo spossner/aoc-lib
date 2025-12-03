@@ -35,10 +35,12 @@ class TreeNode:
         yield from self.nodes()
 
     def __repr__(self):
-        l = str(self.left) if self.left else None
-        r = str(self.right) if self.right else None
-        if l or r:
-            return f"{self.val} [{self.left if self.left else ''}, {self.right if self.right else ''}]"
+        left_str = str(self.left) if self.left else None
+        right_str = str(self.right) if self.right else None
+        if left_str or right_str:
+            left_repr = self.left if self.left else ""
+            right_repr = self.right if self.right else ""
+            return f"{self.val} [{left_repr}, {right_repr}]"
         return str(self.val)
 
     def nodes(self, style=INORDER):

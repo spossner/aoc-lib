@@ -1,0 +1,59 @@
+[project]
+name = "aoc"
+version = "1.2.0"
+description = "Tools and helpers to solve Advent of Code puzzles"
+readme = "README.md"
+authors = [
+    { name = "Seppo", email = "aoc@possner.de" }
+]
+requires-python = ">=3.9"
+dependencies = []
+license = "MIT"
+keywords = ["advent-of-code", "aoc", "puzzles", "algorithms"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Games/Entertainment :: Puzzle Games",
+]
+
+[project.urls]
+Homepage = "https://github.com/spossner/aoc-lib"
+Repository = "https://github.com/spossner/aoc-lib"
+Issues = "https://github.com/spossner/aoc-lib/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.8",
+    "mypy>=1.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.10,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # Allow re-exports
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
