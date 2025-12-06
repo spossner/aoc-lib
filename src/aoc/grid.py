@@ -91,7 +91,6 @@ class Grid:
     def flood_fill(
         self, start: Point | tuple, predicate: Callable[[str], bool] | None = None
     ) -> set[Point]:
-        """Flood fill from start. Predicate filters which cells to include."""
         if predicate is None:
             start_value = self[start]
 
@@ -252,6 +251,10 @@ class Grid:
 
     def copy(self) -> Grid:
         return Grid([row[:] for row in self._data])
+
+    def transpose(self) -> Grid:
+        transposed = [list(row) for row in zip(*self._data)]
+        return Grid(transposed)
 
     def __str__(self) -> str:
         return "\n".join(self.rows())
