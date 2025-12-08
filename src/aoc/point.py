@@ -1,3 +1,4 @@
+import math
 from collections import namedtuple
 
 Point = namedtuple("Point", "x,y", defaults=[0, 0])
@@ -80,6 +81,21 @@ def manhattan_distance(p1, p2) -> int:
     for i in range(len(p1)):
         ans += abs(p1[i] - p2[i])
     return ans
+
+def distance(p1, p2) -> float:
+    """
+        Calculates the distance of two given tuples (may be multi dimensional).
+        Note that both tuples are assumed to have same length.
+
+        :param p1: first tuple
+        :param p2: second tuple with same length than p1
+        :return: the distance of both tuples
+        """
+    assert len(p1) == len(p2)
+    ans = 0
+    for i in range(len(p1)):
+        ans += abs(p1[i] - p2[i]) ** 2
+    return math.sqrt(ans)
 
 
 def all_adjacent_iter(p: tuple, width: int = 0, height: int = 0):

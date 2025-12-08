@@ -35,6 +35,7 @@ from .point import (
     direct_adjacent_iter,
     iter_from_to,
     length,
+    distance,
     manhattan_distance,
     point_by_row,
     rot_ccw,
