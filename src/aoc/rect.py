@@ -16,14 +16,31 @@ class Rect:
     h: int = 0
 
     @classmethod
-    def boundary(cls, points):
-        boundary = None
-        for p in points:
-            if boundary is None:
-                boundary = Rect(*p, 1, 1)
-            else:
+    def boundary(cls, *args):
+        """
+        Create a bounding rectangle that contains all given points.
+
+        Can be called with:
+        - A single Point: Rect.boundary(p1)
+        - Multiple Points: Rect.boundary(p1, p2, p3)
+        - An iterable of Points: Rect.boundary(points_list)
+        """
+        boundary = Rect()
+        for arg in args:
+            # Check if arg is a Point-like (has exactly 2 int elements)
+            try:
+                x, y = arg[0], arg[1]
+                if isinstance(x, int) and isinstance(y, int):
+                    boundary.extend(arg)
+                    continue
+            except (TypeError, IndexError, KeyError):
+                pass
+
+            # Otherwise treat it as an iterable of points
+            for p in arg:
                 boundary.extend(p)
-        return boundary
+
+        return boundary if boundary else None
 
     def translate(self, offset):
         self.x += offset[0]

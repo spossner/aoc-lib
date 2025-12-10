@@ -115,3 +115,56 @@ def test_rect_extend_list_mixed():
     assert Point(34, 34) in r1
     assert Point(70, 70) in r1
     assert Point(0, 0) not in r1
+
+
+def test_boundary_single_point():
+    p1 = Point(5, 10)
+    r = Rect.boundary(p1)
+    assert r == Rect(5, 10, 1, 1)
+    assert p1 in r
+
+
+def test_boundary_multiple_points():
+    p1 = Point(1, 2)
+    p2 = Point(5, 3)
+    p3 = Point(2, 8)
+    r = Rect.boundary(p1, p2, p3)
+    assert r == Rect(1, 2, 5, 7)
+    assert p1 in r
+    assert p2 in r
+    assert p3 in r
+
+
+def test_boundary_iterable_of_points():
+    points = [Point(1, 2), Point(5, 3), Point(2, 8)]
+    r = Rect.boundary(points)
+    assert r == Rect(1, 2, 5, 7)
+    for p in points:
+        assert p in r
+
+
+def test_boundary_tuple_of_points():
+    points = (Point(0, 0), Point(10, 10))
+    r = Rect.boundary(points)
+    assert r == Rect(0, 0, 11, 11)
+    for p in points:
+        assert p in r
+
+
+def test_boundary_generator():
+    def point_gen():
+        yield Point(3, 3)
+        yield Point(7, 9)
+
+    r = Rect.boundary(point_gen())
+    assert r == Rect(3, 3, 5, 7)
+
+
+def test_boundary_empty():
+    r = Rect.boundary()
+    assert r is None
+
+
+def test_boundary_empty_iterable():
+    r = Rect.boundary([])
+    assert r is None
