@@ -168,3 +168,42 @@ def test_boundary_empty():
 def test_boundary_empty_iterable():
     r = Rect.boundary([])
     assert r is None
+
+
+def test_top_left():
+    r = Rect(5, 10, 20, 30)
+    assert r.top_left == Point(5, 10)
+
+
+def test_bottom_right():
+    r = Rect(5, 10, 20, 30)
+    assert r.bottom_right == Point(24, 39)
+
+
+def test_x2():
+    r = Rect(5, 10, 20, 30)
+    assert r.x2 == 24
+
+
+def test_y2():
+    r = Rect(5, 10, 20, 30)
+    assert r.y2 == 39
+
+
+def test_corner_properties_unit_rect():
+    """Test properties on a 1x1 rect where corners are the same point."""
+    r = Rect(3, 7, 1, 1)
+    assert r.top_left == Point(3, 7)
+    assert r.bottom_right == Point(3, 7)
+    assert r.x2 == 3
+    assert r.y2 == 7
+
+
+def test_corner_properties_consistency():
+    """Test that corner properties are consistent with iteration bounds."""
+    r = Rect(2, 3, 5, 4)
+    points = list(r)
+    assert r.top_left == points[0]
+    assert r.bottom_right == points[-1]
+    assert r.x2 == r.bottom_right.x
+    assert r.y2 == r.bottom_right.y

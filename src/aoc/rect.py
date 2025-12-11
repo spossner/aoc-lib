@@ -178,3 +178,19 @@ class Rect:
 
     def __bool__(self):
         return self.w > 0 and self.h > 0
+
+    @property
+    def top_left(self) -> Point:
+        return Point(self.x, self.y)
+
+    @property
+    def bottom_right(self) -> Point:
+        return Point(self.x + self.w - 1, self.y + self.h - 1)
+
+    @property
+    def x2(self) -> int:
+        return self.x + self.w - 1
+
+    @property
+    def y2(self) -> int:
+        return self.y + self.h - 1
